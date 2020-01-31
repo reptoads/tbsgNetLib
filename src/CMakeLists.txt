@@ -2,8 +2,9 @@ add_library(tbsgNetLib STATIC)
 target_sources_local(
     tbsgNetLib
     PRIVATE
- #   Crypto/NetRSA.cpp
- #   Crypto/NetAES.cpp
+    Crypto/NetRSA.cpp
+    Crypto/NetAES.cpp
+    Net/win/WINPacket.cpp
     Net/Client.cpp
     Net/Connection.cpp
     Net/Server.cpp
@@ -18,12 +19,13 @@ target_include_directories(tbsgNetLib
 
 target_link_libraries(tbsgNetLib 
     PUBLIC
-    ssl
-    crypto 
+    openssl
     enet
     ptl
     ws2_32.lib
     winmm.lib
+    ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libcrypto.lib
+    ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/openssl.lib
     ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/libmariadb.lib
     ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/mariadbclient.lib
     FlatValueMap
@@ -49,6 +51,9 @@ target_link_libraries(tbsgNetLib
         target_link_libraries(databaseAPI 
         PUBLIC
         ptl
+        openssl
+        ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libcrypto.lib
+        ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/openssl.lib
         ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/libmariadb.lib
         ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/mariadbclient.lib
         FlatValueMap
