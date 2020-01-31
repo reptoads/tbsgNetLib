@@ -24,8 +24,8 @@ target_link_libraries(tbsgNetLib
     ptl
     ws2_32.lib
     winmm.lib
-    ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libcrypto.lib
-    ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/openssl.lib
+        ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libcrypto.lib
+        ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libssl.lib
     ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/libmariadb.lib
     ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/mariadbclient.lib
     FlatValueMap
@@ -53,7 +53,7 @@ target_link_libraries(tbsgNetLib
         ptl
         openssl
         ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libcrypto.lib
-        ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/openssl.lib
+        ${PROJECT_SOURCE_DIR}/third_party/openssl/lib/libssl.lib
         ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/libmariadb.lib
         ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/mariadbclient.lib
         FlatValueMap
