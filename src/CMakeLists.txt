@@ -1,10 +1,56 @@
-add_library(
+add_library(tbsgNetLib STATIC)
+target_sources_local(
     tbsgNetLib
-    tbsg/tbsgNetLib.hpp
-    tbsg/tbsgNetLib.cpp
+    PRIVATE
+ #   Crypto/NetRSA.cpp
+ #   Crypto/NetAES.cpp
+    Net/Client.cpp
+    Net/Connection.cpp
+    Net/Server.cpp
+    Utility/Utils.cpp
     )
-add_library(tbsg::tbsgNetLib ALIAS tbsgNetLib)
 target_include_directories(tbsgNetLib
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    PRIVATE ${PROJECT_SOURCE_DIR}/third_party/mariadb/include/mysql
+    PUBLIC ${PROJECT_SOURCE_DIR}/include
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/enet/include>
+    )
+
+target_link_libraries(tbsgNetLib 
+    PUBLIC
+    ssl
+    crypto 
+    enet
+    ptl
+    ws2_32.lib
+    winmm.lib
+    ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/libmariadb.lib
+    ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/mariadbclient.lib
+    FlatValueMap
+    BasicLogger
+)
+
+    add_library(databaseAPI STATIC)
+    target_sources_local(
+        databaseAPI
+        PRIVATE
+        databaseAPI/DatabaseAPI.cpp
+        databaseAPI/GameDataDatabase.cpp
+        databaseAPI/ProfileDatabase.cpp
+        )
+    target_include_directories(databaseAPI
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+        PUBLIC ${PROJECT_SOURCE_DIR}/include/
+        PUBLIC ${PROJECT_SOURCE_DIR}/include/databaseAPI
+        PUBLIC ${PROJECT_SOURCE_DIR}/third_party/mariadb/include/mysql
+        PUBLIC ${PROJECT_SOURCE_DIR}/third_party/mariadb/include
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/third_party/enet/include>
+        )
+        target_link_libraries(databaseAPI 
+        PUBLIC
+        ptl
+        ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/libmariadb.lib
+        ${PROJECT_SOURCE_DIR}/third_party/mariadb/lib/mariadbclient.lib
+        FlatValueMap
+        BasicLogger
     )
